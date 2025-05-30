@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pet Chance Calculator 🐾</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    label {
+      display: block;
+      margin: 12px 0 4px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 17px;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fc1;
+    }
+    #out {
+      margin-top: 20px;
+      font-size: 18px;
+      line-height: 1.4;
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+<h2>Pet Chance Calculator</h2>
+
+<label for="debug">Debug Luck %</label>
+<input id="debug" type="number" inputmode="numeric">
+
+<label for="riftEgg">Rift/Egg Luck %</label>
+<input id="riftEgg" type="number" inputmode="numeric">
+
+<label for="base">Pet Base Chance (1/N)</label>
+<input id="base" type="number" inputmode="numeric">
+
+<button onclick="go()">Calculate</button>
+
+<div id="out"></div>
+
+<script>
+  function go() {
+    const debug = +document.getElementById('debug').value || 0;
+    const rift = +document.getElementById('riftEgg').value || 0;
+    const base = +document.getElementById('base').value || 1;
+
+    const totalLuck = 100 + debug + rift;
+    const multiplier = totalLuck / 100;
+    const newDenom = base / multiplier;
+    const percent = 100 / newDenom;
+
+    document.getElementById('out').innerHTML =
+      `🧠 Total Luck: <b>${totalLuck}%</b><br>` +
+      `📈 Multiplier: <b>${multiplier.toFixed(2)}×</b><br>` +
+      `🎯 New Chance: <b>1/${Math.round(newDenom).toLocaleString()}</b> ` +
+      `(${percent.toFixed(5)}%)`;
+  }
+</script>
+
+</body>
+</html>
